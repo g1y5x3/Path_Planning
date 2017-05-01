@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- Stage Simulation -->
+    <node name="stage" pkg="stage_ros" type="stageros" args="$(find harmonic_potential)/worlds/empty_pioneer_3dx.world"/>
+
+    <!-- Map -->
+    <node name="map" pkg="map_server" type="map_server" args="$(find harmonic_potential)/maps/empty.yaml"/>
+
+    <!-- Localization -->
+    <node name="localization" pkg="fake_localization" type="fake_localization" respawn="false" output="screen">
+        <remap from="base_pose_ground_truth" to="base_pose_ground_truth"/>
+        <param name="odom_frame_id"     value="odom"/>
+        <param name="base_frame_id"     value="base_link"/>
+        <param name="global_frame_id"   value="/map"/>
+    </node> 
+
+</launch>

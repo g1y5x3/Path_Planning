@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- Open the stage simulation -->
+    <node name="stage" pkg="stage_ros" type="stageros" args="$(find harmonic_potential)/worlds/empty_pioneer_3dx.world" />
+
+</launch>
