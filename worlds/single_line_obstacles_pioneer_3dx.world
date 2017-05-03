@@ -257,7 +257,28 @@ pioneer3dx
 (		  
   # can refer to the robot by this name
   name "pioneer"
-  pose [3.000 1.500 0.000 90.000] 
+  pose [3.000 0.500 0.000 90.000] 
 
   fancysicklaser(color "blue")
+)
+
+# ---------- Block ----------
+define block model
+(
+    size [0.200 0.200 0.500]
+    velocity [ 0.000 0.000 0.000]
+    gui_nose 0
+)
+
+# adding obstacles
+block
+( 
+    pose [ 0.8.000 2.000 0.000 0.000 ] 
+    color "green" 
+)
+
+block
+( 
+    pose [ 5.2.000 4.000 0.000 0.000 ] 
+    color "green" 
 )

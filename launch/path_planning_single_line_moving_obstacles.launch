@@ -4,9 +4,24 @@
     <param name="/use_sim_time" value="true"/>
 
     <!-- ========== Stage Simulation ========== -->
-    <node name="stage" pkg="stage_ros" type="stageros" args="$(find harmonic_potential)/worlds/single_line_pioneer_3dx.world"/>
+    <node name="stage" pkg="stage_ros" type="stageros" args="$(find harmonic_potential)/worlds/single_line_moving_obstacles_pioneer_3dx.world">
+        <remap from="robot_0/base_scan" to="base_scan"/>
+        <remap from="robot_0/cmd_vel" to="cmd_vel"/>        
+    </node>
+
+    <!-- Simulate the moving objects -->    
+    <node name="move1" pkg="lab1" type="drive_polygon" args="-d 2 -a -90">
+        <remap from="odom" to="robot_1/odom"/>
+        <remap from="cmd_vel" to="robot_1/cmd_vel"/>
+    </node>
+
+    <node name="move2" pkg="lab1" type="drive_polygon" args="-d 2 -a -90">
+        <remap from="odom" to="robot_2/odom"/>
+        <remap from="cmd_vel" to="robot_2/cmd_vel"/>
+    </node>
     
     <!-- ========== Robot Model ========== -->
+    <!-- For display in Rviz purpose --> 
     <arg name="model" default="$(find p3dx_description)/urdf/pioneer3dx.xml"/>
     <arg name="gui" default="False" />
     <param name="robot_description" textfile="$(arg model)" />
@@ -18,17 +33,17 @@
   	</node>    
 
     <!-- ========== Map ========== -->
-    <node name="map" pkg="map_server" type="map_server" args="$(find harmonic_potential)/maps/single_line.yaml"/>
-
+    <node name="map" pkg="map_server" type="map_server" args="$(find harmonic_potential)/maps/single_line.yaml" output="screen"/>
+    
     <!-- ========== Localization ========== -->
     <node name="localization" pkg="fake_localization" type="fake_localization" respawn="false" output="screen">
-        <remap from="base_pose_ground_truth" to="base_pose_ground_truth"/>
+        <remap from="base_pose_ground_truth" to="robot_0/base_pose_ground_truth"/>
         
-        <param name="odom_frame_id"     value="odom"/>
-        <param name="base_frame_id"     value="base_link"/>
+        <param name="odom_frame_id"     value="robot_0/odom"/>
+        <param name="base_frame_id"     value="robot_0/base_link"/>
         <param name="global_frame_id"   value="/map"/>
     </node> 
-
+    
     <!-- ========== Cost Map and Path Planning ========== -->
     <node name="move_base" pkg="move_base" type="move_base" respawn="false" output="screen">
         <rosparam file="$(find harmonic_potential)/param/costmap_common_params_p3dx.yaml" command="load" ns="global_costmap"/>
@@ -40,12 +55,12 @@
         <rosparam file="$(find harmonic_potential)/param/global_planner_params.yaml" command="load" />
     
         <param name="global_costmap/global_frame"       value="map"/>
-        <param name="global_costmap/robot_base_frame"   value="base_footprint"/>
-        <param name="local_costmap/global_frame"        value="odom"/>
-        <param name="local_costmap/robot_base_frame"    value="base_footprint"/>
+        <param name="global_costmap/robot_base_frame"   value="robot_0/base_footprint"/>
+        <param name="local_costmap/global_frame"        value="robot_0/odom"/>
+        <param name="local_costmap/robot_base_frame"    value="robot_0/base_footprint"/>
     </node> 
     
     <!-- ========== Visualisation ========== -->
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find harmonic_potential)/rviz/robot_navigation.rviz"/>    
-    
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find harmonic_potential)/rviz/robot_navigation.rviz"/>     
+
 </launch>

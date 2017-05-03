@@ -257,7 +257,35 @@ pioneer3dx
 (		  
   # can refer to the robot by this name
   name "pioneer"
-  pose [3.000 1.500 0.000 90.000] 
+  pose [3.000 0.500 0.000 90.000] 
 
   fancysicklaser(color "blue")
+)
+
+# ---------- Moving Obstacles ----------
+define turtlebot_ns position
+(
+  pose [ 0.0 0.0 0.0 0.0 ]
+
+  size [ 0.2552 0.2552 0.40 ]
+  origin [ 0.0 0.0 0.0 0.0 ]
+  gui_nose 1
+  ranger_return 1.0 
+  drive "diff"
+  color "gray"
+)
+
+# adding obstacles
+turtlebot_ns
+( 
+    pose [ 0.8.000 1.5.000 0.000 0.000 ] 
+    name "obstacle1"
+    color "green" 
+)
+
+turtlebot_ns
+( 
+    pose [ 5.2.000 5.000 0.000 180.000 ]
+    name "obstacle2"    
+    color "green" 
 )

@@ -29,23 +29,9 @@
         <param name="global_frame_id"   value="/map"/>
     </node> 
 
-    <!-- ========== Cost Map and Path Planning ========== -->
-    <node name="move_base" pkg="move_base" type="move_base" respawn="false" output="screen">
-        <rosparam file="$(find harmonic_potential)/param/costmap_common_params_p3dx.yaml" command="load" ns="global_costmap"/>
-        <rosparam file="$(find harmonic_potential)/param/costmap_common_params_p3dx.yaml" command="load" ns="local_costmap"/>        
-        <rosparam file="$(find harmonic_potential)/param/global_costmap_params.yaml" command="load" />        
-        <rosparam file="$(find harmonic_potential)/param/local_costmap_params.yaml" command="load" />
-        <rosparam file="$(find harmonic_potential)/param/local_planner_params.yaml" command="load" />
-        <rosparam file="$(find harmonic_potential)/param/move_base_params.yaml" command="load" />
-        <rosparam file="$(find harmonic_potential)/param/global_planner_params.yaml" command="load" />
-    
-        <param name="global_costmap/global_frame"       value="map"/>
-        <param name="global_costmap/robot_base_frame"   value="base_footprint"/>
-        <param name="local_costmap/global_frame"        value="odom"/>
-        <param name="local_costmap/robot_base_frame"    value="base_footprint"/>
-    </node> 
-    
-    <!-- ========== Visualisation ========== -->
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find harmonic_potential)/rviz/robot_navigation.rviz"/>    
-    
+    <!-- Run the costmap node -->
+    <node name="costmap_node" pkg="costmap_2d" type="costmap_2d_node" output="screen">
+        <rosparam file="$(find harmonic_potential)/param/example_params.yaml" command="load" ns="costmap" />
+    </node>
+
 </launch>

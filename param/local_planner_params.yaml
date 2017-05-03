@@ -1,0 +1,10 @@
+EBandPlannerROS:
+
+    max_vel_lin: 0.5
+    max_vel_th:  0.5
+    
+    min_vel_lin: 0.0
+    min_vel_th:  0.0
+    
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.15

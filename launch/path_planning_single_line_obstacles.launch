@@ -4,7 +4,7 @@
     <param name="/use_sim_time" value="true"/>
 
     <!-- ========== Stage Simulation ========== -->
-    <node name="stage" pkg="stage_ros" type="stageros" args="$(find harmonic_potential)/worlds/single_line_pioneer_3dx.world"/>
+    <node name="stage" pkg="stage_ros" type="stageros" args="$(find harmonic_potential)/worlds/single_line_obstacles_pioneer_3dx.world"/>
     
     <!-- ========== Robot Model ========== -->
     <arg name="model" default="$(find p3dx_description)/urdf/pioneer3dx.xml"/>
@@ -43,7 +43,7 @@
         <param name="global_costmap/robot_base_frame"   value="base_footprint"/>
         <param name="local_costmap/global_frame"        value="odom"/>
         <param name="local_costmap/robot_base_frame"    value="base_footprint"/>
-    </node> 
+    </node>  
     
     <!-- ========== Visualisation ========== -->
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find harmonic_potential)/rviz/robot_navigation.rviz"/>    
